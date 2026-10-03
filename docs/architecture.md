@@ -49,6 +49,11 @@ Analyst experience ──── evidence, alternatives, follow-up questions
 - `HoldingPerformance`: holding, period return and contribution
 - `PortfolioSnapshot`: validated collection of holdings
 - `PortfolioAttribution`: portfolio return and ranked contributors
+- `PricePoint`: adjusted closing price on a trading date
+- `PriceSeries`: validated chronological prices for one security
+- `MarketDataProvider`: provider-neutral contract for retrieving prices
+- `DailyReturn`: deterministic close-to-close return
+- `MovementSignal`: auditable movement result with thresholds and reasons
 - `InvestigationEvent`: planned next milestone; movement plus contextual timestamps
 
 ## Trust controls
@@ -66,9 +71,9 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 
 ## Near-term implementation sequence
 
-1. Portfolio model and attribution.
-2. Market-data provider interface and local fixture provider.
-3. Daily movement detector using configurable return and z-score thresholds.
+1. Portfolio model and attribution. **Complete**
+2. Market-data provider interface and local fixture provider. **Complete**
+3. Daily movement detector using configurable return and z-score thresholds. **Complete**
 4. Market and sector comparison.
 5. Typed investigation-event creation.
 6. News-provider interface, temporal validation and evidence ranking.
