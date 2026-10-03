@@ -1,23 +1,57 @@
-# Python
+# Byte-compiled Python and native extensions
 __pycache__/
-*.py[cod]
+*.py[codz]
+*$py.class
+*.so
+
+# Packaging
+.Python
+build/
+dist/
 *.egg-info/
+.eggs/
+develop-eggs/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg
+MANIFEST
+
+# Test, coverage and type-checker output
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.tox/
+.nox/
 .coverage
+.coverage.*
 htmlcov/
-dist/
-build/
+coverage.xml
+*.cover
+.hypothesis/
 
 # Environments and secrets
 .venv/
 venv/
+env/
+ENV/
 .env
 .env.*
 !.env.example
+.pypirc
+.streamlit/secrets.toml
 
-# Data and local artifacts
+# Notebooks and documentation builds
+.ipynb_checkpoints/
+docs/_build/
+site/
+
+# Local application data and artifacts
 data/raw/
 data/processed/
 artifacts/
@@ -29,3 +63,4 @@ artifacts/
 .vscode/
 .DS_Store
 Thumbs.db
+tempCodeRunnerFile.py
