@@ -60,6 +60,17 @@ streamlit run app.py
 
 The displayed scenario and evidence are synthetic and require no API credentials.
 
+### Optional live market data
+
+Install the yfinance adapter inside the virtual environment:
+
+```bash
+python -m pip install -e ".[dev,live]"
+python scripts/check_live_market_data.py
+```
+
+yfinance is an unofficial research and educational client for Yahoo Finance and is intended here only for local development and personal-use demonstrations. It is not the production market-data strategy for this project.
+
 Copy `.env.example` to `.env` before configuring future market-data, news, or model providers. Never commit secrets.
 
 ## Responsible-use boundary

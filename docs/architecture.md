@@ -76,6 +76,8 @@ Analyst experience ──── evidence, alternatives, follow-up questions
 
 Raw provider data and secrets remain local and are excluded from Git. Small synthetic fixtures may be committed for deterministic tests. Provider licenses and retention terms must be reviewed before any production use.
 
+The optional `YFinanceMarketDataProvider` supplies auto-adjusted daily prices for local research and demonstration only. It is isolated behind `MarketDataProvider` so a licensed production feed can replace it without changing analytics.
+
 ## Near-term implementation sequence
 
 1. Portfolio model and attribution. **Complete**

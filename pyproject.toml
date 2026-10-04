@@ -20,6 +20,9 @@ dev = [
   "pytest-cov>=5.0",
   "ruff>=0.7",
 ]
+live = [
+  "yfinance>=0.2.66,<1",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]

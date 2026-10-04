@@ -38,7 +38,13 @@ from .evaluation import (
     precision_at_k,
     temporal_validity_rate,
 )
-from .market_data import InMemoryMarketDataProvider, MarketDataProvider, PricePoint, PriceSeries
+from .market_data import (
+    InMemoryMarketDataProvider,
+    MarketDataProvider,
+    MarketDataProviderError,
+    PricePoint,
+    PriceSeries,
+)
 from .models import Holding, HoldingPerformance, PortfolioAttribution, PortfolioSnapshot
 from .movement import (
     DailyReturn,
@@ -47,6 +53,7 @@ from .movement import (
     calculate_daily_returns,
     detect_latest_movement,
 )
+from .providers import YFinanceMarketDataProvider
 
 __all__ = [
     "Holding",
@@ -69,6 +76,7 @@ __all__ = [
     "InvestigationEventConfig",
     "InMemoryNewsProvider",
     "MarketDataProvider",
+    "MarketDataProviderError",
     "MovementDetectorConfig",
     "MovementContext",
     "MovementSignal",
@@ -93,5 +101,6 @@ __all__ = [
     "rank_evidence",
     "precision_at_k",
     "temporal_validity_rate",
+    "YFinanceMarketDataProvider",
     "DailyReturn",
 ]

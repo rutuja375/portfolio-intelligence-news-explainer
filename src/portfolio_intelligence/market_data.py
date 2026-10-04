@@ -6,6 +6,10 @@ from datetime import date
 from typing import Protocol
 
 
+class MarketDataProviderError(RuntimeError):
+    """Raised when an external provider cannot return usable market data."""
+
+
 @dataclass(frozen=True, slots=True, order=True)
 class PricePoint:
     """A security's adjusted closing price for one trading date."""
