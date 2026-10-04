@@ -2,10 +2,13 @@
 
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime, time, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 from .context import MovementContext, compare_latest_context
 from .events import InvestigationEvent, InvestigationEventConfig, build_investigation_event
+from .evidence import EvidenceWindow, NewsProvider, RankedEvidence, rank_evidence
+from .explanation import ExplanationReadiness, assess_explanation_readiness
 from .market_data import MarketDataProvider, PriceSeries
 from .models import Holding, HoldingPerformance, PortfolioSnapshot
 from .movement import MovementDetectorConfig, MovementSignal, detect_latest_movement
@@ -84,6 +87,18 @@ class LiveInvestigationDetail:
     holding: LiveHoldingAnalysis
     context: MovementContext
     event: InvestigationEvent
+
+
+@dataclass(frozen=True, slots=True)
+class LiveEvidenceAssessment:
+    """Ranked live evidence and the deterministic explain-or-abstain decision."""
+
+    ticker: str
+    evidence_window: EvidenceWindow
+    search_start: datetime
+    search_end: datetime
+    ranked_evidence: tuple[RankedEvidence, ...]
+    readiness: ExplanationReadiness
 
 
 DEFAULT_CONTEXT_DEFINITIONS: Mapping[str, ContextDefinition] = {
@@ -258,3 +273,44 @@ def build_live_investigation_detail(
         event_config,
     )
     return LiveInvestigationDetail(holding=holding, context=context, event=event)
+
+
+def build_live_evidence_assessment(
+    detail: LiveInvestigationDetail,
+    provider: NewsProvider,
+    surrounding_hours: float = 24.0,
+    evidence_limit: int = 10,
+) -> LiveEvidenceAssessment:
+    """Retrieve, time-align and rank news for a live investigation event."""
+
+    if not detail.event.investigation_required:
+        raise ValueError("Live evidence can only be retrieved for an investigation event")
+    if surrounding_hours < 0:
+        raise ValueError("Surrounding hours cannot be negative")
+    if evidence_limit <= 0:
+        raise ValueError("Evidence limit must be positive")
+
+    points = detail.holding.prices.points
+    if len(points) < 2:
+        raise ValueError("At least two price observations are required")
+    market_timezone = ZoneInfo("America/New_York")
+    movement_start = datetime.combine(points[-2].date, time(16, 0), market_timezone)
+    movement_end = datetime.combine(points[-1].date, time(16, 0), market_timezone)
+    window = EvidenceWindow(
+        movement_start=movement_start.astimezone(timezone.utc),
+        movement_end=movement_end.astimezone(timezone.utc),
+    )
+    padding = timedelta(hours=surrounding_hours)
+    search_start = window.movement_start - padding
+    search_end = window.movement_end + padding
+    items = provider.search(detail.holding.ticker, search_start, search_end)
+    ranked = rank_evidence(items, window, limit=evidence_limit)
+    readiness = assess_explanation_readiness(ranked)
+    return LiveEvidenceAssessment(
+        ticker=detail.holding.ticker,
+        evidence_window=window,
+        search_start=search_start,
+        search_end=search_end,
+        ranked_evidence=ranked,
+        readiness=readiness,
+    )

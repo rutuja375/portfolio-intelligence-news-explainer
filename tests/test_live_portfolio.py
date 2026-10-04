@@ -1,18 +1,20 @@
 import unittest
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 
 from portfolio_intelligence import (
     ContextClassification,
     ContextDefinition,
+    EvidenceItem,
     InMemoryMarketDataProvider,
+    InMemoryNewsProvider,
     MovementDetectorConfig,
     PortfolioPositionInput,
     PricePoint,
     PriceSeries,
     analyze_live_portfolio,
+    build_live_evidence_assessment,
     build_live_investigation_detail,
 )
-
 
 START = date(2026, 1, 1)
 END = date(2026, 1, 6)
@@ -103,6 +105,60 @@ class LivePortfolioTests(unittest.TestCase):
 
         self.assertEqual(detail.context.classification, ContextClassification.COMPANY_SPECIFIC)
         self.assertTrue(detail.event.investigation_required)
+
+    def test_retrieves_and_ranks_time_aligned_live_evidence(self) -> None:
+        analysis = analyze_live_portfolio(
+            (
+                PortfolioPositionInput("NVDA", 10),
+                PortfolioPositionInput("MSFT", 5),
+            ),
+            self.provider,
+            START,
+            END,
+            self.config,
+        )
+        detail = build_live_investigation_detail(
+            analysis,
+            "NVDA",
+            self.provider,
+            {"NVDA": ContextDefinition("SPY", "SOXX", ("AMD", "AVGO"))},
+        )
+        news = InMemoryNewsProvider(
+            (
+                EvidenceItem(
+                    evidence_id="news-1",
+                    title="Material Nvidia update",
+                    summary="A timestamped report.",
+                    url="https://example.com/news-1",
+                    source="Example Wire",
+                    published_at=datetime(2026, 1, 5, 22, 0, tzinfo=timezone.utc),
+                    related_tickers=("NVDA",),
+                    semantic_relevance=0.95,
+                    financial_relevance=0.9,
+                    source_quality=0.8,
+                    sentiment=-0.4,
+                ),
+                EvidenceItem(
+                    evidence_id="news-2",
+                    title="Second Nvidia report",
+                    summary="A second timestamped report.",
+                    url="https://example.com/news-2",
+                    source="Second Wire",
+                    published_at=datetime(2026, 1, 6, 18, 0, tzinfo=timezone.utc),
+                    related_tickers=("NVDA",),
+                    semantic_relevance=0.9,
+                    financial_relevance=0.85,
+                    source_quality=0.8,
+                    sentiment=-0.3,
+                ),
+            )
+        )
+
+        assessment = build_live_evidence_assessment(detail, news)
+
+        self.assertEqual(len(assessment.ranked_evidence), 2)
+        self.assertFalse(assessment.readiness.should_abstain)
+        self.assertEqual(assessment.ticker, "NVDA")
 
     def test_rejects_duplicate_tickers(self) -> None:
         with self.assertRaisesRegex(ValueError, "duplicate"):

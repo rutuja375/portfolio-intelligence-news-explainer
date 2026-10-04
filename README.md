@@ -72,7 +72,10 @@ attribution weight = prior position value ÷ prior total portfolio value
 contribution = attribution weight × latest holding return
 ```
 
-This live workflow intentionally stops before news explanation until a live evidence provider with reliable publication timestamps is connected.
+For a flagged holding, the live workflow can retrieve timestamped Alpha Vantage news,
+classify each article relative to the close-to-close movement window, rank the evidence,
+and apply the deterministic explain-or-abstain policy. AI narrative generation remains
+disabled until this evidence gate has been validated with live examples.
 
 ### Optional live market data
 
@@ -88,6 +91,26 @@ yfinance is an unofficial research and educational client for Yahoo Finance and 
 The adapter uses auto-adjusted prices but leaves yfinance's optional repair mode disabled, avoiding its additional SciPy dependency.
 
 Copy `.env.example` to `.env` before configuring future market-data, news, or model providers. Never commit secrets.
+
+### Live news evidence
+
+Create a free Alpha Vantage API key, copy `.env.example` to `.env`, and set:
+
+```text
+ALPHA_VANTAGE_API_KEY=your_private_key
+```
+
+Restart Streamlit after saving the file. The key stays local because `.env` is excluded
+from Git. The free Alpha Vantage tier is intended for light development usage and is
+currently limited to 25 requests per day. The adapter uses the provider's ticker/topic
+relevance and sentiment as input signals, while this application independently controls
+the evidence window, timing classification, ranking, confidence, and abstention.
+
+Verify the key with one API request before opening the interface:
+
+```bash
+python scripts/check_live_news.py
+```
 
 ## Responsible-use boundary
 

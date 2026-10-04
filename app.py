@@ -1,18 +1,25 @@
 """Streamlit interface for synthetic and live portfolio investigation."""
 
+import os
 from datetime import date, timedelta
 
 import streamlit as st
+from dotenv import load_dotenv
 
 from portfolio_intelligence import (
+    AlphaVantageNewsProvider,
     ContextClassification,
     EvidenceTiming,
     PortfolioPositionInput,
     YFinanceMarketDataProvider,
     analyze_live_portfolio,
+    build_abstention,
+    build_live_evidence_assessment,
     build_live_investigation_detail,
 )
 from portfolio_intelligence.demo import build_demo_investigation
+
+load_dotenv()
 
 
 def percent(value: float) -> str:
@@ -165,7 +172,8 @@ def parse_positions(edited_rows) -> tuple[PortfolioPositionInput, ...]:
 def render_live_portfolio() -> None:
     st.info(
         "Live adjusted prices are retrieved through yfinance for personal research and "
-        "demonstration only. Live news and explanations are not yet enabled."
+        "demonstration only. Alpha Vantage supplies timestamped news evidence when a "
+        "local API key is configured."
     )
     st.subheader("1. Enter portfolio holdings")
     st.caption(
@@ -206,6 +214,7 @@ def render_live_portfolio() -> None:
                 )
             st.session_state["live_analysis"] = analysis
             st.session_state.pop("live_detail", None)
+            st.session_state.pop("live_evidence", None)
         except Exception as error:
             st.error(str(error))
 
@@ -265,6 +274,7 @@ def render_live_portfolio() -> None:
                     YFinanceMarketDataProvider(),
                 )
             st.session_state["live_detail"] = detail
+            st.session_state.pop("live_evidence", None)
         except Exception as error:
             st.error(str(error))
 
@@ -288,10 +298,73 @@ def render_live_portfolio() -> None:
     )
     st.write("**Investigation event:**", detail.event.event_id)
     st.write("**Decision reasons:**", ", ".join(detail.event.decision_reasons))
-    st.warning(
-        "Live evidence retrieval is not connected yet. The system will not generate a "
-        "news explanation until sources can be time-aligned and cited."
+    st.subheader("5. Timestamped news evidence")
+    api_key = os.getenv("ALPHA_VANTAGE_API_KEY", "").strip()
+    if not api_key:
+        st.warning(
+            "Add ALPHA_VANTAGE_API_KEY to your local .env file, then restart Streamlit. "
+            "Never commit the .env file."
+        )
+        return
+
+    st.caption(
+        "The search covers 24 hours around the close-to-close movement window. "
+        "Publication timestamps are independently classified before ranking."
     )
+    if st.button("Retrieve and rank news evidence"):
+        try:
+            with st.spinner("Retrieving and time-aligning financial news..."):
+                assessment = build_live_evidence_assessment(
+                    detail,
+                    AlphaVantageNewsProvider(api_key),
+                )
+            st.session_state["live_evidence"] = assessment
+        except Exception as error:
+            st.error(str(error))
+
+    assessment = st.session_state.get("live_evidence")
+    if assessment is None or assessment.ticker != detail.holding.ticker:
+        return
+
+    st.caption(
+        f"Movement window: {assessment.evidence_window.movement_start.isoformat()} to "
+        f"{assessment.evidence_window.movement_end.isoformat()}"
+    )
+    if not assessment.ranked_evidence:
+        st.warning("No timestamped articles were returned for this evidence window.")
+    for position, ranked in enumerate(assessment.ranked_evidence, start=1):
+        with st.container(border=True):
+            left, right = st.columns([4, 1])
+            left.markdown(f"**{position}. [{ranked.item.title}]({ranked.item.url})**")
+            if ranked.item.summary:
+                left.write(ranked.item.summary)
+            left.caption(
+                f"{ranked.item.source} · {ranked.item.published_at.isoformat()} · "
+                f"{ranked.timing.value.replace('_', ' ').title()}"
+            )
+            right.metric("Evidence score", f"{ranked.combined_score:.3f}")
+            st.write("Signals:", ", ".join(ranked.ranking_reasons))
+
+    st.subheader("6. Explanation readiness")
+    readiness = assessment.readiness
+    first, second, third = st.columns(3)
+    first.metric("Evidence confidence", readiness.confidence.value)
+    second.metric("Eligible sources", len(readiness.selected_evidence))
+    third.metric("Conflicting signals", "Yes" if readiness.conflict_detected else "No")
+    if readiness.should_abstain:
+        abstention = build_abstention(readiness)
+        st.warning(abstention.summary)
+    else:
+        st.success(
+            "The evidence gate passed. The selected sources are eligible for cited "
+            "explanation synthesis."
+        )
+        st.info(
+            "AI narrative generation is intentionally still disabled. This screen now "
+            "proves retrieval, timestamp validation, ranking, and the explain-or-abstain "
+            "decision before a model is introduced."
+        )
+    st.caption("Decision reasons: " + ", ".join(readiness.reasons))
 
 
 st.set_page_config(

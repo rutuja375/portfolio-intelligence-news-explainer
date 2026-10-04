@@ -7,6 +7,15 @@ from .context import (
     MovementContext,
     compare_latest_context,
 )
+from .evaluation import (
+    BinaryClassificationMetrics,
+    ExplanationQualityMetrics,
+    binary_classification_metrics,
+    evaluate_claim_support,
+    evaluate_explanation,
+    precision_at_k,
+    temporal_validity_rate,
+)
 from .events import InvestigationEvent, InvestigationEventConfig, build_investigation_event
 from .evidence import (
     EvidenceItem,
@@ -29,14 +38,17 @@ from .explanation import (
     build_abstention,
     build_grounded_explanation,
 )
-from .evaluation import (
-    BinaryClassificationMetrics,
-    ExplanationQualityMetrics,
-    binary_classification_metrics,
-    evaluate_claim_support,
-    evaluate_explanation,
-    precision_at_k,
-    temporal_validity_rate,
+from .live_portfolio import (
+    DEFAULT_CONTEXT_DEFINITIONS,
+    ContextDefinition,
+    LiveEvidenceAssessment,
+    LiveHoldingAnalysis,
+    LiveInvestigationDetail,
+    LivePortfolioAnalysis,
+    PortfolioPositionInput,
+    analyze_live_portfolio,
+    build_live_evidence_assessment,
+    build_live_investigation_detail,
 )
 from .market_data import (
     InMemoryMarketDataProvider,
@@ -44,16 +56,6 @@ from .market_data import (
     MarketDataProviderError,
     PricePoint,
     PriceSeries,
-)
-from .live_portfolio import (
-    DEFAULT_CONTEXT_DEFINITIONS,
-    ContextDefinition,
-    LiveHoldingAnalysis,
-    LiveInvestigationDetail,
-    LivePortfolioAnalysis,
-    PortfolioPositionInput,
-    analyze_live_portfolio,
-    build_live_investigation_detail,
 )
 from .models import Holding, HoldingPerformance, PortfolioAttribution, PortfolioSnapshot
 from .movement import (
@@ -63,7 +65,11 @@ from .movement import (
     calculate_daily_returns,
     detect_latest_movement,
 )
-from .providers import YFinanceMarketDataProvider
+from .providers import (
+    AlphaVantageNewsError,
+    AlphaVantageNewsProvider,
+    YFinanceMarketDataProvider,
+)
 
 __all__ = [
     "Holding",
@@ -87,6 +93,7 @@ __all__ = [
     "InvestigationEvent",
     "InvestigationEventConfig",
     "LiveHoldingAnalysis",
+    "LiveEvidenceAssessment",
     "LiveInvestigationDetail",
     "LivePortfolioAnalysis",
     "InMemoryNewsProvider",
@@ -105,10 +112,13 @@ __all__ = [
     "calculate_attribution",
     "assess_explanation_readiness",
     "analyze_live_portfolio",
+    "AlphaVantageNewsError",
+    "AlphaVantageNewsProvider",
     "binary_classification_metrics",
     "build_abstention",
     "build_grounded_explanation",
     "build_live_investigation_detail",
+    "build_live_evidence_assessment",
     "evaluate_claim_support",
     "evaluate_explanation",
     "calculate_daily_returns",
