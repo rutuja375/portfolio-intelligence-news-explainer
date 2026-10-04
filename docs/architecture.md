@@ -58,6 +58,8 @@ Analyst experience ──── evidence, alternatives, follow-up questions
 - `InvestigationEvent`: validated portfolio contribution, movement and context decision record
 - `EvidenceItem`: normalized source metadata and independently calculated relevance signals
 - `RankedEvidence`: temporally classified evidence with a transparent composite score
+- `ExplanationReadiness`: deterministic sufficiency, confidence and conflict assessment
+- `GroundedExplanation`: cited claims or an explicit abstention response
 
 ## Trust controls
 
@@ -80,5 +82,5 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 4. Market, sector and peer comparison. **Complete**
 5. Typed investigation-event creation. **Complete**
 6. News-provider interface, temporal validation and evidence ranking. **Complete (offline)**
-7. Grounded explanation interface with abstention.
+7. Grounded explanation interface with abstention. **Complete (deterministic safeguards)**
 8. Evaluation harness and lightweight analyst UI.

@@ -19,6 +19,16 @@ from .evidence import (
     classify_evidence_timing,
     rank_evidence,
 )
+from .explanation import (
+    ExplanationConfidence,
+    ExplanationPolicy,
+    ExplanationReadiness,
+    GroundedClaim,
+    GroundedExplanation,
+    assess_explanation_readiness,
+    build_abstention,
+    build_grounded_explanation,
+)
 from .market_data import InMemoryMarketDataProvider, MarketDataProvider, PricePoint, PriceSeries
 from .models import Holding, HoldingPerformance, PortfolioAttribution, PortfolioSnapshot
 from .movement import (
@@ -38,6 +48,11 @@ __all__ = [
     "EvidenceRankingConfig",
     "EvidenceTiming",
     "EvidenceWindow",
+    "ExplanationConfidence",
+    "ExplanationPolicy",
+    "ExplanationReadiness",
+    "GroundedClaim",
+    "GroundedExplanation",
     "InMemoryMarketDataProvider",
     "InvestigationEvent",
     "InvestigationEventConfig",
@@ -53,6 +68,9 @@ __all__ = [
     "PriceSeries",
     "RankedEvidence",
     "calculate_attribution",
+    "assess_explanation_readiness",
+    "build_abstention",
+    "build_grounded_explanation",
     "calculate_daily_returns",
     "classify_evidence_timing",
     "compare_latest_context",
