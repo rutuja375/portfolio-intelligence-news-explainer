@@ -60,6 +60,20 @@ streamlit run app.py
 
 The displayed scenario and evidence are synthetic and require no API credentials.
 
+### Live portfolio workflow
+
+In **Live portfolio analysis** mode, users enter only ticker and shares, then select **Run portfolio analysis**. The application retrieves adjusted prices, calculates position values and portfolio weights, attributes the latest portfolio return, detects unusual movements, and ranks holdings by absolute contribution. Flagged holdings can be opened for curated market, sector and peer context.
+
+Portfolio contribution uses each holding's weight at the prior close:
+
+```text
+prior position value = shares × prior adjusted close
+attribution weight = prior position value ÷ prior total portfolio value
+contribution = attribution weight × latest holding return
+```
+
+This live workflow intentionally stops before news explanation until a live evidence provider with reliable publication timestamps is connected.
+
 ### Optional live market data
 
 Install the yfinance adapter inside the virtual environment:

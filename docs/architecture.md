@@ -78,6 +78,10 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 
 The optional `YFinanceMarketDataProvider` supplies auto-adjusted daily prices for local research and demonstration only. It is isolated behind `MarketDataProvider` so a licensed production feed can replace it without changing analytics.
 
+## Live portfolio analysis
+
+The live interface accepts ticker and share count rather than asking users to calculate weights. It derives prior-close weights for mathematically consistent attribution, shows current position weights separately, and flags a holding only when its latest movement is abnormal and its absolute portfolio contribution is material. Detailed context uses a small curated mapping of broad-market ETF, sector ETF and peers; unsupported tickers still receive portfolio analytics but do not claim sector context.
+
 ## Near-term implementation sequence
 
 1. Portfolio model and attribution. **Complete**
