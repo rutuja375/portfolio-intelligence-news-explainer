@@ -32,7 +32,7 @@ Grounded explanation, citations and abstention
 
 ## Current status
 
-The offline MVP foundation now spans deterministic portfolio attribution, abnormal-movement detection, market context, investigation events, evidence ranking, and grounded-explanation safeguards. Every material claim must cite selected evidence, confidence is evidence-based, conflicts reduce confidence, and insufficient or post-only evidence produces abstention. Live providers and LLM synthesis remain intentionally deferred until the offline controls are stable.
+The offline MVP foundation now spans deterministic portfolio attribution, abnormal-movement detection, market context, investigation events, evidence ranking, grounded-explanation safeguards, and evaluation metrics. The harness measures detection and abstention decisions, Precision@K, temporal validity, citation correctness, and unsupported claims. Live providers and LLM synthesis remain intentionally deferred until the offline controls are stable.
 
 ## Repository structure
 

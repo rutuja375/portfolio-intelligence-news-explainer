@@ -60,6 +60,8 @@ Analyst experience ──── evidence, alternatives, follow-up questions
 - `RankedEvidence`: temporally classified evidence with a transparent composite score
 - `ExplanationReadiness`: deterministic sufficiency, confidence and conflict assessment
 - `GroundedExplanation`: cited claims or an explicit abstention response
+- `BinaryClassificationMetrics`: accuracy, precision, recall and F1 for decisions
+- `ExplanationQualityMetrics`: citation correctness and unsupported-claim rate
 
 ## Trust controls
 
@@ -83,4 +85,5 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 5. Typed investigation-event creation. **Complete**
 6. News-provider interface, temporal validation and evidence ranking. **Complete (offline)**
 7. Grounded explanation interface with abstention. **Complete (deterministic safeguards)**
-8. Evaluation harness and lightweight analyst UI.
+8. Evaluation harness. **Complete (metric foundation)**
+9. Lightweight analyst UI.
