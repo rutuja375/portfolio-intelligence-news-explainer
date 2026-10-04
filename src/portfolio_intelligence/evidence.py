@@ -3,7 +3,7 @@
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from datetime import datetime
-from enum import StrEnum
+from enum import Enum
 from typing import Protocol
 
 
@@ -17,7 +17,7 @@ def _validate_unit_interval(value: float, field_name: str) -> None:
         raise ValueError(f"{field_name} must be between 0 and 1")
 
 
-class EvidenceTiming(StrEnum):
+class EvidenceTiming(str, Enum):
     """Position of publication time relative to the movement window."""
 
     PRE_MOVEMENT = "PRE_MOVEMENT"

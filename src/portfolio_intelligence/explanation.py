@@ -2,13 +2,13 @@
 
 from collections.abc import Sequence
 from dataclasses import dataclass
-from enum import StrEnum
+from enum import Enum
 from statistics import fmean
 
 from .evidence import EvidenceTiming, RankedEvidence
 
 
-class ExplanationConfidence(StrEnum):
+class ExplanationConfidence(str, Enum):
     """Evidence-based confidence in the explanation, not market certainty."""
 
     HIGH = "HIGH"

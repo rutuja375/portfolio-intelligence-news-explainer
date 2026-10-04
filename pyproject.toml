@@ -7,7 +7,7 @@ name = "portfolio-intelligence-news-explainer"
 version = "0.1.0"
 description = "Evidence-first investigation of unusual portfolio movements"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Rutuja Kakad" }]
 dependencies = [
@@ -29,7 +29,7 @@ testpaths = ["tests"]
 addopts = "-q"
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py310"
 line-length = 100
 
 [tool.ruff.lint]

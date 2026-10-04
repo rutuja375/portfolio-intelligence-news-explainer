@@ -44,7 +44,7 @@ tests/                        Automated tests
 
 ## Local setup
 
-Requirements: Python 3.11 or newer.
+Requirements: Python 3.10 or newer.
 
 ```bash
 python -m venv .venv

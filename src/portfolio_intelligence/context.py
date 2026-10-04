@@ -3,14 +3,14 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import date
-from enum import StrEnum
+from enum import Enum
 from statistics import fmean
 
 from .market_data import PriceSeries
 from .movement import calculate_daily_returns
 
 
-class ContextClassification(StrEnum):
+class ContextClassification(str, Enum):
     """High-level interpretation of a security's latest movement."""
 
     MARKET_WIDE = "MARKET_WIDE"
