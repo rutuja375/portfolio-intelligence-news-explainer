@@ -55,7 +55,7 @@ Analyst experience ──── evidence, alternatives, follow-up questions
 - `DailyReturn`: deterministic close-to-close return
 - `MovementSignal`: auditable movement result with thresholds and reasons
 - `MovementContext`: aligned market, sector and peer comparison with explicit classification
-- `InvestigationEvent`: planned next milestone; movement plus contextual timestamps
+- `InvestigationEvent`: validated portfolio contribution, movement and context decision record
 
 ## Trust controls
 
@@ -76,7 +76,7 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 2. Market-data provider interface and local fixture provider. **Complete**
 3. Daily movement detector using configurable return and z-score thresholds. **Complete**
 4. Market, sector and peer comparison. **Complete**
-5. Typed investigation-event creation.
+5. Typed investigation-event creation. **Complete**
 6. News-provider interface, temporal validation and evidence ranking.
 7. Grounded explanation interface with abstention.
 8. Evaluation harness and lightweight analyst UI.

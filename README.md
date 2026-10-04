@@ -32,7 +32,7 @@ Grounded explanation, citations and abstention
 
 ## Current status
 
-Phase 1 is underway. The repository now includes deterministic portfolio attribution, a provider-independent market-data contract, validated adjusted-price series, configurable abnormal-movement detection, and aligned market, sector and peer context classification. Live provider integration remains intentionally deferred until the offline analytics are stable.
+Phase 1 is underway. The repository now includes deterministic portfolio attribution, a provider-independent market-data contract, configurable abnormal-movement detection, aligned market context, and typed investigation events that require both an abnormal move and material portfolio contribution. Live provider integration remains intentionally deferred until the offline analytics are stable.
 
 ## Repository structure
 

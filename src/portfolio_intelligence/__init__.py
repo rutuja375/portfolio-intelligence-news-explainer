@@ -7,6 +7,7 @@ from .context import (
     MovementContext,
     compare_latest_context,
 )
+from .events import InvestigationEvent, InvestigationEventConfig, build_investigation_event
 from .market_data import InMemoryMarketDataProvider, MarketDataProvider, PricePoint, PriceSeries
 from .models import Holding, HoldingPerformance, PortfolioAttribution, PortfolioSnapshot
 from .movement import (
@@ -23,6 +24,8 @@ __all__ = [
     "ContextClassification",
     "ContextConfig",
     "InMemoryMarketDataProvider",
+    "InvestigationEvent",
+    "InvestigationEventConfig",
     "MarketDataProvider",
     "MovementDetectorConfig",
     "MovementContext",
@@ -34,6 +37,7 @@ __all__ = [
     "calculate_attribution",
     "calculate_daily_returns",
     "compare_latest_context",
+    "build_investigation_event",
     "detect_latest_movement",
     "DailyReturn",
 ]
