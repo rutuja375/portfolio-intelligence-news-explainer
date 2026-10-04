@@ -32,7 +32,7 @@ Grounded explanation, citations and abstention
 
 ## Current status
 
-The offline MVP foundation now spans deterministic portfolio attribution, abnormal-movement detection, market context, investigation events, evidence ranking, grounded-explanation safeguards, and evaluation metrics. The harness measures detection and abstention decisions, Precision@K, temporal validity, citation correctness, and unsupported claims. Live providers and LLM synthesis remain intentionally deferred until the offline controls are stable.
+The repository now includes a lightweight Streamlit analyst interface powered by a coherent synthetic investigation. It exercises the real offline pipeline from portfolio attribution through cited explanation, while live providers and LLM synthesis remain intentionally deferred.
 
 ## Repository structure
 
@@ -51,6 +51,14 @@ python -m venv .venv
 python -m pip install -e ".[dev]"
 pytest
 ```
+
+Start the analyst demo:
+
+```bash
+streamlit run app.py
+```
+
+The displayed scenario and evidence are synthetic and require no API credentials.
 
 Copy `.env.example` to `.env` before configuring future market-data, news, or model providers. Never commit secrets.
 

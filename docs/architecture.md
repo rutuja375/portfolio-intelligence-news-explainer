@@ -86,4 +86,4 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 6. News-provider interface, temporal validation and evidence ranking. **Complete (offline)**
 7. Grounded explanation interface with abstention. **Complete (deterministic safeguards)**
 8. Evaluation harness. **Complete (metric foundation)**
-9. Lightweight analyst UI.
+9. Lightweight analyst UI. **Complete (synthetic Streamlit demo)**
