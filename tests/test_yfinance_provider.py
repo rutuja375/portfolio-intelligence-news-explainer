@@ -45,7 +45,7 @@ class YFinanceProviderTests(unittest.TestCase):
         self.assertEqual(received["start"], "2026-01-02")
         self.assertEqual(received["end"], "2026-01-06")
         self.assertTrue(received["auto_adjust"])
-        self.assertTrue(received["repair"])
+        self.assertFalse(received["repair"])
         self.assertEqual(result.ticker, "NVDA")
         self.assertEqual([point.adjusted_close for point in result.points], [100.0, 102.5])
 

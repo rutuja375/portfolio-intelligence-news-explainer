@@ -49,7 +49,7 @@ class YFinanceMarketDataProvider:
                 end=(end + timedelta(days=1)).isoformat(),
                 interval="1d",
                 auto_adjust=True,
-                repair=True,
+                repair=False,
                 progress=False,
                 threads=False,
                 timeout=self._timeout_seconds,

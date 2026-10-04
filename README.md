@@ -71,6 +71,8 @@ python scripts/check_live_market_data.py
 
 yfinance is an unofficial research and educational client for Yahoo Finance and is intended here only for local development and personal-use demonstrations. It is not the production market-data strategy for this project.
 
+The adapter uses auto-adjusted prices but leaves yfinance's optional repair mode disabled, avoiding its additional SciPy dependency.
+
 Copy `.env.example` to `.env` before configuring future market-data, news, or model providers. Never commit secrets.
 
 ## Responsible-use boundary
