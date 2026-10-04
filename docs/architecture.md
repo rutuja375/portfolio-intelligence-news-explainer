@@ -56,6 +56,8 @@ Analyst experience ──── evidence, alternatives, follow-up questions
 - `MovementSignal`: auditable movement result with thresholds and reasons
 - `MovementContext`: aligned market, sector and peer comparison with explicit classification
 - `InvestigationEvent`: validated portfolio contribution, movement and context decision record
+- `EvidenceItem`: normalized source metadata and independently calculated relevance signals
+- `RankedEvidence`: temporally classified evidence with a transparent composite score
 
 ## Trust controls
 
@@ -77,6 +79,6 @@ Raw provider data and secrets remain local and are excluded from Git. Small synt
 3. Daily movement detector using configurable return and z-score thresholds. **Complete**
 4. Market, sector and peer comparison. **Complete**
 5. Typed investigation-event creation. **Complete**
-6. News-provider interface, temporal validation and evidence ranking.
+6. News-provider interface, temporal validation and evidence ranking. **Complete (offline)**
 7. Grounded explanation interface with abstention.
 8. Evaluation harness and lightweight analyst UI.

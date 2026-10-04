@@ -32,7 +32,7 @@ Grounded explanation, citations and abstention
 
 ## Current status
 
-Phase 1 is underway. The repository now includes deterministic portfolio attribution, a provider-independent market-data contract, configurable abnormal-movement detection, aligned market context, and typed investigation events that require both an abnormal move and material portfolio contribution. Live provider integration remains intentionally deferred until the offline analytics are stable.
+The offline MVP foundation now spans deterministic portfolio attribution, abnormal-movement detection, market context, typed investigation events, and transparent evidence ranking. Evidence is explicitly separated into pre-, during- and post-movement timing, with later reporting penalized to protect temporal integrity. Live market and news providers remain intentionally deferred until the offline pipeline is stable.
 
 ## Repository structure
 
